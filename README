@@ -1,0 +1,81 @@
+NAME
+    Alma::Analytics.pm
+
+SYNOPSIS
+        use Alma::Analytics;
+
+        my $api = Alma::Analytics->new(
+            path  =>  '/shared/path/to/your/report',
+            limit  =>  1000,
+            apikey  =>  'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            host  =>  'api-ap.hosted.exlibrisgroup.com',
+            saveto => 'filename-prefix',
+            filter => '<xml filter code from OBI>',
+        );
+
+        until ($api->isFinished) {
+
+            my $rows = $api->get;
+            foreach my $row ( @{ $rows } ) {
+                    print $row->{Column3}, "\t", $row->{Column1}, "\n";
+            }
+
+        }
+
+DESCRIPTION
+    Uses the Analytics API to extract data. Data is returned as an array,
+    where each item in the array is a data row from Analytics.
+
+    You need to run the report once with the saveto parameter to see which
+    columns contain which data fields. It's not obvious.
+
+OPTIONS
+    path [required]
+        The path to your Report in OBI
+
+    limit [optional]
+        how many rows per file? Somewhere between 25 and 1000, in multiples
+        of 25. Defaults to 1000.
+
+    apikey [optional]
+        Your API key. This is hard coded in the script, but can be used to
+        override the default.
+
+    host [optional]
+        The Analytics host. Hard coded, but use this to override.
+
+    saveto [optional]
+        A file name prefix for saving the incoming XML file(s).
+
+    filter [optional]
+        An XML-format filter for the report, created by copying from OBI,
+        under the Advanced tab.
+
+AUTHOR
+    Steve Thomas <stephen.thomas@adelaide.edu.au>
+
+VERSION
+    This is version 2015.06.23
+
+LICENCE
+    Copyright 2015 Steve Thomas
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
